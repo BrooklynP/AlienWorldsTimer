@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Alien Worlds Timer",
-    "version": "0.2",
+    "version": "0.3",
     "permissions": [
         "storage"
     ],
@@ -15,7 +15,7 @@
       ],
       "background": {
           "scripts": ["background.js"],
-          "persistent": false
+          "persistent": true
       },
     "browser_action": {  "default_popup": "popup.html" },
     "icons": {

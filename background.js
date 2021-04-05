@@ -1,23 +1,20 @@
 let lastNotifiedID = null;
-
 function checkIfMineReady(timeToCheck) {
     setTimeout(() => {
         console.log("Checking if mine ready");
         const waxAddress = localStorage.getItem('waxAddress');
         if (waxAddress) {
-            fetch('https://awstats.io/mining/miner/24/' + waxAddress)
-                .then(response => response.text())
-                .then(html => {
-                    const table = html.split('<table border="0" class="dataframe w3-table w3-hoverable w3-light-grey top-miner-table" id="all-mines-table">')[1];
-                    const tableBody = table.split('<tbody>')[1];
-                    const topTableRow = tableBody.split('<tr>')[1];
-                    const tableCol = topTableRow.split('<td>');
-
-                    const lastMineDate = new Date(tableCol[3].replace('</td>', '').replace(' ', 'T').trim() + 'Z');
-                    const mineCooldownTime = parseInt(tableCol[6].replace('</td>', '').trim());
+            fetch('https://api.alienworlds.io/v1/alienworlds/mines?limit=1&miner=' + waxAddress)
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                    const lastMineDate = new Date(json.results[0].block_timestamp);
+                    const mineCooldownTime = json.results[0].params.delay;
                     const nowDate = new Date();
                     const nextMineDate = new Date(lastMineDate.getTime() + (mineCooldownTime * 1000));
 
+                    localStorage.setItem('nextMineTime', nextMineDate);
+                    
                     if (nowDate > nextMineDate) {
                         console.log("mine ready");
                         if(JSON.stringify(lastMineDate) != JSON.stringify(lastNotifiedID)){
@@ -41,4 +38,4 @@ function checkIfMineReady(timeToCheck) {
         }
     }, timeToCheck);
 }
-checkIfMineReady(1000);
+checkIfMineReady(0);
