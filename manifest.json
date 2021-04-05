@@ -1,10 +1,9 @@
 {
     "manifest_version": 2,
     "name": "Alien Worlds Timer",
-    "version": "0.3",
-    "permissions": [
-        "storage"
-    ],
+    "description": "Track when your next mine is available so you never forget",
+    "version": "0.1.0",
+    "author":"Brooklyn",
     "content_scripts": [
         {
           "matches": [
@@ -19,8 +18,8 @@
       },
     "browser_action": {  "default_popup": "popup.html" },
     "icons": {
-        "16": "favicon.ico",
-        "48": "favicon.ico",
-        "128": "favicon.ico"
+        "16": "logo.png",
+        "48": "logo.png",
+        "128": "logo.png"
     }
   }
