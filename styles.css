@@ -1,3 +1,20 @@
+body{
+    background-color: rgb(0,25,45);
+}
 h1, p{
     text-align: center;
+    color:  white
+}
+
+button{
+    cursor: pointer;
+    background-color:  rgb(0,60,112);
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: center;
 }
