@@ -1,5 +1,6 @@
 document.getElementById('changeWaxBtn').addEventListener('click', setCurrentWaxAddress)
 getCurrentlySetWaxAddress();
+getTimeUntilNextMine();
 
 function getCurrentlySetWaxAddress() {
     let waxAddress = localStorage.getItem('waxAddress')
@@ -13,4 +14,10 @@ function setCurrentWaxAddress() {
     console.log(waxAddress);
     localStorage.setItem('waxAddress', waxAddress);
     getCurrentlySetWaxAddress();
+}
+
+function getTimeUntilNextMine() {
+    let timeUntilNextMineString = localStorage.getItem('nextMineTime');
+    let timeUntilNextMine = new Date(timeUntilNextMineString);
+    document.getElementById('nextMine').innerText = timeUntilNextMine.toLocaleTimeString();
 }
