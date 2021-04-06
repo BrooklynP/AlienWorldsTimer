@@ -3,7 +3,7 @@ function checkIfMineReady(timeToCheck) {
     setTimeout(() => {
         const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
         const shouldPingSound = localStorage.getItem('sound');
-
+        console.log(shouldPingSound);
         if (shouldShowAlerts === 'checked' || shouldPingSound === 'alien' || shouldPingSound === 'monkey') {
             console.log("Checking if mine ready");
             const waxAddress = localStorage.getItem('waxAddress');
@@ -11,7 +11,6 @@ function checkIfMineReady(timeToCheck) {
                 fetch('https://api.alienworlds.io/v1/alienworlds/mines?limit=1&miner=' + waxAddress)
                     .then(response => response.json())
                     .then(json => {
-                        console.log(json);
                         const lastMineDate = new Date(json.results[0].block_timestamp);
                         const mineCooldownTime = json.results[0].params.delay;
                         const nowDate = new Date();
@@ -59,7 +58,7 @@ function notifyUser(){
         let pingAudio = new Audio('./ping.mp3');
         pingAudio.play();
     }
-    else if(shouldMonkeySound === 'monkey'){
+    else if(sound === 'monkey'){
         let monkeyAudio = new Audio('/chimp.mp3');
         monkeyAudio.play();
     }

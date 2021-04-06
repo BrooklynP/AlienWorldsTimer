@@ -36,10 +36,10 @@ function toggleShowAlerts() {
 }
 
 function changeSoundEffect() {
-    let chimpRadio = document.getElementById('chimpRadio').checked;
+    let monkeyRadio = document.getElementById('monkeyRadio').checked;
     let alienRadio = document.getElementById('alienRadio').checked;
 
-    if(chimpRadio){
+    if(monkeyRadio){
         localStorage.setItem('sound', 'monkey');
         let monkeyAudio = new Audio('./chimp.mp3');
         monkeyAudio.play();
@@ -58,9 +58,18 @@ function initialise() {
     document.getElementById('changeWaxBtn').addEventListener('click', setCurrentWaxAddress)
     document.getElementById('shouldShowAlertsToggle').addEventListener('click', toggleShowAlerts)
     
-    document.getElementById('chimpRadio').addEventListener('click', changeSoundEffect);
-    document.getElementById('alienRadio').addEventListener('click', changeSoundEffect);
-    document.getElementById('noneRadio').addEventListener('click', changeSoundEffect);
+    let monkeyRadio = document.getElementById('monkeyRadio');
+    let alienRadio = document.getElementById('alienRadio');
+    let noneRadio = document.getElementById('noneRadio');
+
+    monkeyRadio.addEventListener('click', changeSoundEffect);
+    alienRadio.addEventListener('click', changeSoundEffect);
+    noneRadio.addEventListener('click', changeSoundEffect);
+
+    const sound = localStorage.getItem('sound');
+    noneRadio.checked = sound === 'none';
+    monkeyRadio.checked = sound === 'monkey';
+    alienRadio.checked = sound === 'alien';
 
     getCurrentlySetWaxAddress();
     getTimeUntilNextMine();
