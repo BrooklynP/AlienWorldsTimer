@@ -17,7 +17,12 @@ function setCurrentWaxAddress() {
 function getTimeUntilNextMine() {
     let timeUntilNextMineString = localStorage.getItem('nextMineTime');
     let timeUntilNextMine = new Date(timeUntilNextMineString);
+    if(timeUntilNextMine > new Date()){
     document.getElementById('nextMine').innerText = timeUntilNextMine.toLocaleTimeString();
+    }
+    else{
+        document.getElementById('nextMine').innerText = "NOW";
+    }
 }
 
 function toggleShowAlerts() {
