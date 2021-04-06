@@ -1,6 +1,4 @@
-document.getElementById('changeWaxBtn').addEventListener('click', setCurrentWaxAddress)
-getCurrentlySetWaxAddress();
-getTimeUntilNextMine();
+initialise();
 
 function getCurrentlySetWaxAddress() {
     let waxAddress = localStorage.getItem('waxAddress')
@@ -20,4 +18,28 @@ function getTimeUntilNextMine() {
     let timeUntilNextMineString = localStorage.getItem('nextMineTime');
     let timeUntilNextMine = new Date(timeUntilNextMineString);
     document.getElementById('nextMine').innerText = timeUntilNextMine.toLocaleTimeString();
+}
+
+function toggleShowAlerts() {
+    let showAlertsToggle = document.getElementById('shouldShowAlertsToggle');
+    if(showAlertsToggle.checked === true){
+        localStorage.setItem('shouldShowAlerts','checked')
+    }
+    else{
+        localStorage.setItem('shouldShowAlerts','unchecked')
+    }
+}
+
+function initialise() {
+    document.getElementById('changeWaxBtn').addEventListener('click', setCurrentWaxAddress)
+    document.getElementById('shouldShowAlertsToggle').addEventListener('click', toggleShowAlerts)
+    getCurrentlySetWaxAddress();
+    getTimeUntilNextMine();
+
+    let showAlerts = localStorage.getItem('shouldShowAlerts');
+    if(!showAlerts){
+        localStorage.setItem('shouldShowAlerts','checked');
+        showAlerts = 'checked';
+    }
+    document.getElementById('shouldShowAlertsToggle').checked = showAlerts === 'checked';
 }
