@@ -2,10 +2,9 @@ let lastNotifiedID = null;
 function checkIfMineReady(timeToCheck) {
     setTimeout(() => {
         const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
-        const shouldPingSound = localStorage.getItem('shouldPingSound');
-        const shouldMonkeySound = localStorage.getItem('shouldMonkeySound');
+        const shouldPingSound = localStorage.getItem('sound');
 
-        if (shouldShowAlerts === 'checked' || shouldPingSound === 'yes' || shouldMonkeySound === 'yes') {
+        if (shouldShowAlerts === 'checked' || shouldPingSound === 'alien' || shouldPingSound === 'monkey') {
             console.log("Checking if mine ready");
             const waxAddress = localStorage.getItem('waxAddress');
             if (waxAddress) {
@@ -53,6 +52,8 @@ checkIfMineReady(0);
 function notifyUser(){
     const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
     const sound = localStorage.getItem('sound');
+
+    console.log(sound);
 
     if(sound === 'alien'){
         let pingAudio = new Audio('./ping.mp3');
