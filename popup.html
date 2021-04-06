@@ -12,15 +12,36 @@
     <h1>AW Timer</h1>
     <h2>Next Mine At</h2>
     <h2 id="nextMine"></h2>
-    <p>Alerts</p>
-    <div class="buttonContainer">
-        <input id="shouldShowAlertsToggle" type="checkbox">
-    </div>
-    <p id="waxAddressDisplay">Your WAX address isn't set</p>
-    <input id="waxAddress" placeholder="New Wax Address">
-    <div class="buttonContainer">
-        <button id="changeWaxBtn">Change Wax Address</button>
-    </div>
+    <details>
+        <summary>Settings</summary>
+        <hr>
+        <div class="buttonContainer">
+            <label for="shouldShowAlertsToggle">Show Browser Popup</label>
+            <input id="shouldShowAlertsToggle" type="checkbox">
+        </div>
+        <hr>
+        <p>Play Sound Effect</p>
+        <div class="soundRadio">
+            <div>
+                <label for="chimpRadio">Monkey</label>
+                <input id="chimpRadio" type="radio" name="soundEffect" value="chimp">
+            </div>
+            <div>
+                <label for="alienRadio">Alien</label>
+                <input id="alienRadio" type="radio" name="soundEffect" value="alien">
+            </div>
+            <div>
+                <label for="noneRadio">None</label>
+                <input id="noneRadio" type="radio" name="soundEffect" value="none" checked>
+            </div>
+        </div>
+        <hr>
+        <p id="waxAddressDisplay">Your WAX address isn't set</p>
+        <input id="waxAddress" placeholder="New Wax Address">
+        <div class="buttonContainer">
+            <button id="changeWaxBtn">Change Wax Address</button>
+        </div>
+    </details>
 </body>
 
 </html>

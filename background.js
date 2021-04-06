@@ -2,7 +2,10 @@ let lastNotifiedID = null;
 function checkIfMineReady(timeToCheck) {
     setTimeout(() => {
         const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
-        if (shouldShowAlerts === 'checked') {
+        const shouldPingSound = localStorage.getItem('shouldPingSound');
+        const shouldMonkeySound = localStorage.getItem('shouldMonkeySound');
+
+        if (shouldShowAlerts === 'checked' || shouldPingSound === 'yes' || shouldMonkeySound === 'yes') {
             console.log("Checking if mine ready");
             const waxAddress = localStorage.getItem('waxAddress');
             if (waxAddress) {
@@ -23,7 +26,7 @@ function checkIfMineReady(timeToCheck) {
                                 lastNotifiedID = null;
                             }
                             if (lastNotifiedID === null) {
-                                alert("Ready to mine");
+                                notifyUser();
                                 lastNotifiedID = lastMineDate;
                             }
                             checkIfMineReady(1000);
@@ -45,3 +48,21 @@ function checkIfMineReady(timeToCheck) {
     }, timeToCheck);
 }
 checkIfMineReady(0);
+
+
+function notifyUser(){
+    const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
+    const sound = localStorage.getItem('sound');
+
+    if(sound === 'alien'){
+        let pingAudio = new Audio('./ping.mp3');
+        pingAudio.play();
+    }
+    else if(shouldMonkeySound === 'monkey'){
+        let monkeyAudio = new Audio('/chimp.mp3');
+        monkeyAudio.play();
+    }
+    if(shouldShowAlerts === 'checked'){
+        alert('Ready To Mine');
+    }
+}
