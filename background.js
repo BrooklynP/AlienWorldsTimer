@@ -48,21 +48,27 @@ function checkIfMineReady(timeToCheck) {
 checkIfMineReady(0);
 
 
-function notifyUser(){
+function notifyUser() {
     const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
     const sound = localStorage.getItem('sound');
+    let audio;
 
     console.log(sound);
 
-    if(sound === 'alien'){
-        let pingAudio = new Audio('./ping.mp3');
-        pingAudio.play();
+    if (sound === 'alien') {
+        audio = new Audio('./ping.mp3');
+        audio.play();
     }
-    else if(sound === 'monkey'){
-        let monkeyAudio = new Audio('/chimp.mp3');
-        monkeyAudio.play();
+    else if (sound === 'monkey') {
+        audio = new Audio('/monkey.wav');
+        audio.play();
     }
-    if(shouldShowAlerts === 'checked'){
-        alert('Ready To Mine');
+    if (shouldShowAlerts === 'checked') {
+        if (audio) {
+            setTimeout(() => { alert('Ready To Mine'); }, 100)
+        }
+        else {
+            alert('Ready To Mine');
+        }
     }
 }
