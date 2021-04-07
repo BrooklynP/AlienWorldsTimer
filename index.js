@@ -1,63 +1,91 @@
 initialise();
 
 function getCurrentlySetWaxAddress() {
-    let waxAddress = localStorage.getItem('waxAddress')
+    const waxAddress = localStorage.getItem('waxAddress');
+    let cmLink = document.getElementById('cmLink');
+    cmLink.href = 'https://cmstats.net/mining/user/?user=' + waxAddress;
     if (waxAddress) {
         document.getElementById('waxAddressDisplay').innerText = 'Your WAX address is set to ' + waxAddress
     }
 }
 
 function setCurrentWaxAddress() {
-    let waxAddress = document.getElementById('waxAddress').value;
+    const waxAddress = document.getElementById('waxAddress').value;
     console.log(waxAddress);
     localStorage.setItem('waxAddress', waxAddress);
     getCurrentlySetWaxAddress();
 }
 
 function getTimeUntilNextMine() {
-    let timeUntilNextMineString = localStorage.getItem('nextMineTime');
-    let timeUntilNextMine = new Date(timeUntilNextMineString);
-    if(timeUntilNextMine > new Date()){
-    document.getElementById('nextMine').innerText = timeUntilNextMine.toLocaleTimeString();
+    const timeUntilNextMineString = localStorage.getItem('nextMineTime');
+    const timeUntilNextMine = new Date(timeUntilNextMineString);
+    if (timeUntilNextMine > new Date()) {
+        document.getElementById('nextMine').innerText = timeUntilNextMine.toLocaleTimeString();
     }
-    else{
+    else {
         document.getElementById('nextMine').innerText = "NOW";
     }
 }
 
 function toggleShowAlerts() {
-    let showAlertsToggle = document.getElementById('shouldShowAlertsToggle');
-    if(showAlertsToggle.checked === true){
-        localStorage.setItem('shouldShowAlerts','checked')
+    const showAlertsToggle = document.getElementById('shouldShowAlertsToggle');
+    if (showAlertsToggle.checked === true) {
+        localStorage.setItem('shouldShowAlerts', 'checked')
     }
-    else{
-        localStorage.setItem('shouldShowAlerts','unchecked')
+    else {
+        localStorage.setItem('shouldShowAlerts', 'unchecked')
     }
 }
 
 function changeSoundEffect() {
-    let monkeyRadio = document.getElementById('monkeyRadio').checked;
-    let alienRadio = document.getElementById('alienRadio').checked;
+    const monkeyRadio = document.getElementById('monkeyRadio').checked;
+    const alienRadio = document.getElementById('alienRadio').checked;
 
-    if(monkeyRadio){
+    if (monkeyRadio) {
         localStorage.setItem('sound', 'monkey');
-        let monkeyAudio = new Audio('./chimp.mp3');
+        let monkeyAudio = new Audio('./monkey.wav');
         monkeyAudio.play();
     }
-    else if(alienRadio){
+    else if (alienRadio) {
         localStorage.setItem('sound', 'alien');
         let pingAudio = new Audio('./ping.mp3');
         pingAudio.play();
     }
-    else{
+    else {
         localStorage.setItem('sound', 'none');
     }
+}
+
+function getTLMMined() {
+    let tlmMined = document.getElementById('TLM');
+    tlmMined.innerText = "LOADING";
+    const waxAddress = localStorage.getItem('waxAddress')
+    fetch('https://cmstats.net/mining/user/?user=' + waxAddress, {
+        mode: 'cors',
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        }
+    }).then(response => response.text())
+        .then(text => {
+            let div = text.split('<div class="card text-center text-black  mb-3" id="red">')
+            if (div.length > 0) {
+                div = div[1].split('<div class="col-md">')[0];
+                let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
+                tlmMined.innerText = tlmValue + "TLM";
+            }
+            else {
+                div = text.split('<div class="card text-center text-black  mb-3" id="green">')
+                div = div[1].split('<div class="col-md">')[0];
+                let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
+                tlmMined.innerText = tlmValue + "TLM";
+            }
+        }).catch(error => { console.log(error) })
 }
 
 function initialise() {
     document.getElementById('changeWaxBtn').addEventListener('click', setCurrentWaxAddress)
     document.getElementById('shouldShowAlertsToggle').addEventListener('click', toggleShowAlerts)
-    
+
     let monkeyRadio = document.getElementById('monkeyRadio');
     let alienRadio = document.getElementById('alienRadio');
     let noneRadio = document.getElementById('noneRadio');
@@ -73,10 +101,11 @@ function initialise() {
 
     getCurrentlySetWaxAddress();
     getTimeUntilNextMine();
+    getTLMMined();
 
     let showAlerts = localStorage.getItem('shouldShowAlerts');
-    if(!showAlerts){
-        localStorage.setItem('shouldShowAlerts','checked');
+    if (!showAlerts) {
+        localStorage.setItem('shouldShowAlerts', 'checked');
         showAlerts = 'checked';
     }
     document.getElementById('shouldShowAlertsToggle').checked = showAlerts === 'checked';

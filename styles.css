@@ -2,7 +2,7 @@ body{
     background-color: rgb(0,25,45);
     width: 180px;
 }
-h1, h2, p, label, summary{
+h1, h2, p, label, summary, a{
     text-align: center;
     color:  white
 }
