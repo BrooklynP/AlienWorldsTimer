@@ -14,6 +14,7 @@ function setCurrentWaxAddress() {
     console.log(waxAddress);
     localStorage.setItem('waxAddress', waxAddress);
     getCurrentlySetWaxAddress();
+    getTLMMined();
 }
 
 function getTimeUntilNextMine() {
@@ -60,26 +61,28 @@ function getTLMMined() {
     let tlmMined = document.getElementById('TLM');
     tlmMined.innerText = "LOADING";
     const waxAddress = localStorage.getItem('waxAddress')
-    fetch('https://cmstats.net/mining/user/?user=' + waxAddress, {
-        mode: 'cors',
-        headers: {
-            'Access-Control-Allow-Origin': '*'
-        }
-    }).then(response => response.text())
-        .then(text => {
-            let div = text.split('<div class="card text-center text-black  mb-3" id="red">')
-            if (div.length > 0) {
-                div = div[1].split('<div class="col-md">')[0];
-                let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
-                tlmMined.innerText = tlmValue + "TLM";
+    if (waxAddress) {
+        fetch('https://cmstats.net/mining/user/?user=' + waxAddress, {
+            mode: 'cors',
+            headers: {
+                'Access-Control-Allow-Origin': '*'
             }
-            else {
-                div = text.split('<div class="card text-center text-black  mb-3" id="green">')
-                div = div[1].split('<div class="col-md">')[0];
-                let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
-                tlmMined.innerText = tlmValue + "TLM";
-            }
-        }).catch(error => { console.log(error) })
+        }).then(response => response.text())
+            .then(text => {
+                let div = text.split('<div class="card text-center text-black  mb-3" id="red">')
+                if (div.length > 0) {
+                    div = div[1].split('<div class="col-md">')[0];
+                    let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
+                    tlmMined.innerText = tlmValue + "TLM";
+                }
+                else {
+                    div = text.split('<div class="card text-center text-black  mb-3" id="green">')
+                    div = div[1].split('<div class="col-md">')[0];
+                    let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
+                    tlmMined.innerText = tlmValue + "TLM";
+                }
+            }).catch(error => { console.log(error) })
+    }
 }
 
 function initialise() {
