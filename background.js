@@ -7,7 +7,8 @@ function checkIfMineReady(timeToCheck) {
             console.log("Checking if mine ready");
             const waxAddress = localStorage.getItem('waxAddress');
             if (waxAddress) {
-                let waxoreos = 'eos'
+                // let waxoreos = 'eos'
+                let waxoreos = 'wax'
                 if (waxoreos === 'eos') {
                     checkMineViaEOS(waxAddress)
                 }
