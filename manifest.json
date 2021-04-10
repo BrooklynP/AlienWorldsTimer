@@ -19,6 +19,7 @@
     "128": "logo.png"
   },
   "permissions": [
-    "https://cmstats.net/"
+    "https://cmstats.net/",
+    "https://wax.eosrio.io/"
   ]
 }

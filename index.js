@@ -11,10 +11,10 @@ function getCurrentlySetWaxAddress() {
 
 function setCurrentWaxAddress() {
     const waxAddress = document.getElementById('waxAddress').value;
-    console.log(waxAddress);
     localStorage.setItem('waxAddress', waxAddress);
     getCurrentlySetWaxAddress();
     getTLMMined();
+    getTimeUntilNextMine();
 }
 
 function getTimeUntilNextMine() {
