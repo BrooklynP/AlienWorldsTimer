@@ -70,7 +70,7 @@ function getTLMMined() {
         }).then(response => response.text())
             .then(text => {
                 let div = text.split('<div class="card text-center text-black  mb-3" id="red">')
-                if (div.length > 0) {
+                if (div.length > 1) {
                     div = div[1].split('<div class="col-md">')[0];
                     let tlmValue = div.split('<h3 class="card-title">')[1].split('</h3>')[0];
                     tlmMined.innerText = tlmValue + "TLM";
