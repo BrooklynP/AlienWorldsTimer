@@ -1,5 +1,6 @@
 let lastNotifiedID = null;
 function checkIfMineReady(timeToCheck) {
+    console.log("setting timeout");
     setTimeout(() => {
         const shouldShowAlerts = localStorage.getItem('shouldShowAlerts');
         const shouldPingSound = localStorage.getItem('sound');
@@ -8,12 +9,17 @@ function checkIfMineReady(timeToCheck) {
             const waxAddress = localStorage.getItem('waxAddress');
             if (waxAddress) {
                 // let waxoreos = 'eos'
-                let waxoreos = 'wax'
-                if (waxoreos === 'eos') {
+                let AWorEOS = 'aw'
+                if (AWorEOS === 'eos') {
+                    console.log("eos api");
                     checkMineViaEOS(waxAddress)
                 }
-                else if (waxoreos === 'wax') {
-                    checkMineViaWax(waxAddress);
+                else if (AWorEOS === 'aw') {
+                    console.log("aw api");
+                    checkMineViaAW(waxAddress);
+                }
+                else{
+                    console.log("api not set correctly", AWorEOS);
                 }
             }
             else {
@@ -79,25 +85,34 @@ function checkMineViaEOS(waxAddress) {
 
                         checkMine(lastMineDate, nextMineDate);
                     }).catch(error => {
-                        console.log(error); checkIfMineReady(5000);
+                        console.log(error); checkIfMineReady(10000);
                     });
             }
+            else {
+                checkIfMineReady(10000);
+            }
         }).catch(error => {
-            console.error(error); checkIfMineReady(5000);
+            console.error(error); checkIfMineReady(10000);
         });
 }
 
-function checkMineViaWax(waxAddress) {
+function checkMineViaAW(waxAddress) {
     fetch('https://api.alienworlds.io/v1/alienworlds/mines?limit=1&miner=' + waxAddress)
         .then(response => response.json())
         .then(json => {
-            const lastMineDate = new Date(json.results[0].block_timestamp);
-            const mineCooldownTime = json.results[0].params.delay;
-            const nextMineDate = new Date(lastMineDate.getTime() + (mineCooldownTime * 1000));
+            console.log(json);
+            if (json && json.results && json.results.length > 0) {
+                const lastMineDate = new Date(json.results[0].block_timestamp);
+                const mineCooldownTime = json.results[0].params.delay;
+                const nextMineDate = new Date(lastMineDate.getTime() + (mineCooldownTime * 1000));
 
-            checkMine(lastMineDate, nextMineDate);
+                checkMine(lastMineDate, nextMineDate);
+            }
+            else {
+                checkIfMineReady(10000);
+            }
         }).catch(error => {
-            console.error(error); checkIfMineReady(5000);
+            console.error(error); checkIfMineReady(10000);
         });
 }
 
