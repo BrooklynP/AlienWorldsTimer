@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Alien Worlds Timer",
   "description": "Track when your next mine is available so you never forget",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "author": "Brooklyn",
   "background": {
     "scripts": [
